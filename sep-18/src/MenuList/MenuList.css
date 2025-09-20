@@ -1,0 +1,10 @@
+.menuList {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: start;
+  align-items: stretch;
+  width: 80%;
+  max-width: 1000px;
+  margin: auto;
+}
