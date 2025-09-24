@@ -1,14 +1,16 @@
+import { useContext } from 'react';
 import './MenuListItem.css';
-import type { MenuItemData } from '../../App';
+import ItemsInCartContext from '../../ItemsInCartContext';
 
 type MenuListItemProps = {
   itemName: string;
   itemPrice: number;
   numInCart: number;
-  addItemToCart: (item: MenuItemData) => void
 };
 
-export default function MenuListItem({ itemName, itemPrice, numInCart, addItemToCart }: MenuListItemProps) {
+export default function MenuListItem({ itemName, itemPrice, numInCart }: MenuListItemProps) {
+  const { itemsInCartDispatch } = useContext(ItemsInCartContext)!;
+
   return (
     <div className='menuListItem'>
       <div className='menuListItemTopRow'>
@@ -28,7 +30,10 @@ export default function MenuListItem({ itemName, itemPrice, numInCart, addItemTo
 
         <button
           className='addToCartButton'
-          onClick={() => addItemToCart({ name: itemName, price: itemPrice })}
+          onClick={() => itemsInCartDispatch({
+            type: 'add',
+            item: { name: itemName, price: itemPrice }
+          })}
         >
           Add to cart
         </button>

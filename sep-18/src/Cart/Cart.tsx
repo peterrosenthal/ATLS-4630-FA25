@@ -1,13 +1,11 @@
 import './Cart.css';
 import CartItem from './CartItem/CartItem';
-import type { CartItemData } from '../App';
+import { useContext } from 'react';
+import ItemsInCartContext from '../ItemsInCartContext';
 
-type CartProps = {
-  items: CartItemData[]
-  removeItemFromCart: (id: number) => void;
-};
+export default function Cart() {
+  const { itemsInCart: items } = useContext(ItemsInCartContext)!;
 
-export default function Cart({ items, removeItemFromCart }: CartProps) {
   return (
     <div className='cart'>
       {items.map(item =>
@@ -15,7 +13,6 @@ export default function Cart({ items, removeItemFromCart }: CartProps) {
           key={item.id}
           itemName={item.name}
           id={item.id}
-          removeItemFromCart={removeItemFromCart}
         />
       )}
     </div>

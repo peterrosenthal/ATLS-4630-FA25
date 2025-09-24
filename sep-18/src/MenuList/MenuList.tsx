@@ -1,19 +1,16 @@
+import { useContext } from 'react';
 import './MenuList.css';
 import MenuListItem from './MenuListItem/MenuListItem';
 import type { MenuItemData } from '../App';
-
-type MenuListItemType = {
-  name: string;
-  price: number;
-  numInCart: number;
-}
+import ItemsInCartContext from '../ItemsInCartContext';
 
 type MenuListProps = {
-  items: MenuListItemType[];
-  addItemToCart: (item: MenuItemData) => void;
+  items: MenuItemData[];
 };
 
-export default function MenuList({ items, addItemToCart }: MenuListProps) {
+export default function MenuList({ items }: MenuListProps) {
+  const { itemsInCart } = useContext(ItemsInCartContext)!;
+
   return (
     <div className='menuList'>
       {items.map(item => 
@@ -21,8 +18,7 @@ export default function MenuList({ items, addItemToCart }: MenuListProps) {
           key={item.name}
           itemName={item.name}
           itemPrice={item.price}
-          numInCart={item.numInCart}
-          addItemToCart={addItemToCart}
+          numInCart={itemsInCart.filter(i => i.name === item.name).length}
         />
       )}
     </div>

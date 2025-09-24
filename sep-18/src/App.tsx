@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import Cart from './Cart/Cart';
 import MenuList from './MenuList/MenuList';
+import { ItemsInCartContextProvider } from './ItemsInCartContextProvider';
 
 export type MenuItemData = {
   name: string;
@@ -36,10 +37,34 @@ export type CartItemData = {
   id: number;
 };
 
+/*
+function itemsInCartReducer(
+  itemsInCart: CartItemData[],
+  event: { type: 'add'; item: MenuItemData } | { type: 'remove'; id: number },
+) {
+  switch (event.type) {
+    case 'add': {
+      const newId = itemsInCart.length > 0 ?
+        Math.max(...itemsInCart.map(item => item.id)) + 1 :
+        0;
+      return [...itemsInCart, { name: event.item.name, id: newId}];
+    }
+    case 'remove': {
+      return itemsInCart.filter(item => item.id !== event.id);
+    }
+    default: {
+      throw new Error('unknown event type!');
+    }
+  }
+}
+*/
+
 export default function App() {
-  const [itemsInCart, setItemsInCart] = useState<CartItemData[]>([]);
+  // const [itemsInCart, setItemsInCart] = useState<CartItemData[]>([]);
+  // const [itemsInCart, itemsInCartDispatch] = useReducer(itemsInCartReducer, []);
   const [cartIsOpen, setCartIsOpen] = useState(false);
 
+  /*
   function addItemToCart(item: MenuItemData) {
     const newId = itemsInCart.length > 0 ?
       Math.max(...itemsInCart.map(item => item.id)) + 1 :
@@ -50,39 +75,40 @@ export default function App() {
   function removeItemFromCart(id: number) {
     setItemsInCart(itemsInCart.filter(item => item.id !== id));
   }
+  */
 
-  console.log(itemsInCart);
+  /*
+  function addItemToCart(item: MenuItemData) {
+    itemsInCartDispatch({ type: 'add', item: item });
+  }
+
+  function removeItemFromCart(id: number) {
+    itemsInCartDispatch({ type: 'remove', id: id });
+  }
+  */
 
   return (
-    <div className='app'>
-      <header>
-        <h1>Thinking in React - Menu</h1>
+    <ItemsInCartContextProvider>
+      <div className='app'>
+        <header>
+          <h1>Thinking in React - Menu</h1>
 
-        <button
-          className='cartButton'
-          onClick={() => setCartIsOpen(!cartIsOpen)}
-        >
-          Cart
-        </button>
-      </header>
+          <button
+            className='cartButton'
+            onClick={() => setCartIsOpen(!cartIsOpen)}
+          >
+            Cart
+          </button>
+        </header>
 
-      {cartIsOpen && (
-        <Cart
-          items={itemsInCart}
-          removeItemFromCart={removeItemFromCart}
+        {cartIsOpen && (
+          <Cart />
+        )}
+
+        <MenuList
+          items={menuItems}
         />
-      )}
-
-      <MenuList
-        items={menuItems.map(item => {
-          return {
-            name: item.name,
-            price: item.price,
-            numInCart: itemsInCart.filter(cartItem => cartItem.name === item.name).length,
-          };
-        })}
-        addItemToCart={addItemToCart}
-      />
-    </div>
+      </div>
+    </ItemsInCartContextProvider>
   );
 }
