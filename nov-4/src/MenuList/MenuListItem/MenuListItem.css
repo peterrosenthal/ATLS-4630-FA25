@@ -1,0 +1,39 @@
+.menuListItem {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: start;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 32px;
+  border-radius: 16px;
+  background-color: #fafafa;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.menuListItemTopRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menuListItemBottomRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.addToCartButton {
+  background-color: #1A447B;
+  color: white;
+  padding-inline: 8px;
+  padding-block: 2px;
+  border-style: none;
+  border-radius: 16px;
+}
+
+.addToCartButton:hover {
+  background-color: #12335E;
+}
